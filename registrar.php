@@ -1,6 +1,6 @@
 <?php
-
-require_once ('conexion.php');
+require_once('funciones.php');
+$conexion = conexion();
 
 $nombre = $_POST['nombre'];
 $apellido = $_POST['apellido'];

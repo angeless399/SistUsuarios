@@ -3,13 +3,31 @@
 if(isset($_GET['s']) && $_GET['s']==1){
     echo "USUARIO ELIMINADO";
 }
-//sesion.php
-if(isset($_GET['u'])){
-    echo "USUARIO o CONTRASEÑA INCORRECTA";
-}
+
 //registrar.php
 if(isset($_GET['t'])){
     echo "USUARIO REGISTRADO, INICIE SESION";
+}
+?>
+<?php
+session_start();
+require_once('funciones.php');
+if(isset($_POST['enviar'])){
+    $conexion = conexion();
+    $email = $_POST['email'];
+    $pass = $_POST['pass'];
+    $sql ="SELECT * FROM usuarios WHERE email='$email' AND pass='$pass'";
+    $consulta = mysqli_query($conexion, $sql);
+    if(mysqli_num_rows($consulta)>0){
+        $reg = mysqli_fetch_assoc($consulta);
+        $_SESSION['nombre']=$reg['nombre'];
+        $_SESSION['id']=$reg['id_usuario'];
+        header("location: inicio.php");
+    }else{
+        echo "Usuario o contraseña incorrecta";
+        session_destroy();
+    }
+
 }
 ?>
 <!DOCTYPE html>
@@ -22,11 +40,12 @@ if(isset($_GET['t'])){
 </head>
 <body>
     <h2>Iniciar sesion</h2>
-    <form action="sesion.php" method="POST">
+    <form action="" method="POST">
         <label for="">Email </label><input type="email" name="email" required><br>
         <label for="">Contraseña </label><input type="password" name="pass" required><br>
-        <input type="submit" value="Ingresar">
+        <input type="submit" value="Ingresar" name='enviar'>
     </form>
     <a href="InterfazRegistro.html">Registrarme</a>
 </body>
 </html>
+

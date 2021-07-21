@@ -1,24 +1,19 @@
 <?php
 session_start();
 if(isset($_SESSION['id'])){
-    $id = $_SESSION['id'];
-    echo $_SESSION['nombre']."<br>";
-    echo '<a href="perfil.php">ver perfil</a><br>';
-    echo '<a href="cerrarsesion.php">cerrar sesion</a>';
+     $id = $_SESSION['id'];
 
-    require_once('conexion.php');
-
+    require_once('funciones.php');
+    $conexion = conexion();
+    
     if(isset($_GET['e']) && $_GET['e']==1){
         echo 'PERFIL MODIFICADO';
     }elseif(isset($_GET['e']) && $_GET['e']==0) {
         echo 'ERROR al MODIFICAR PERFIL';
     }
 
-/*$email = $_POST['email'];
-$pass = $_POST['pass'];*/
-
-$sql ="SELECT * FROM usuarios WHERE id_usuario = '$id'";
-$consulta = mysqli_query($conexion, $sql);
+    $sql ="SELECT * FROM usuarios WHERE id_usuario = '$id'";
+    $consulta = mysqli_query($conexion, $sql);
 
         if(mysqli_num_rows($consulta)>0){
             $reg = mysqli_fetch_assoc($consulta);
@@ -33,6 +28,12 @@ $consulta = mysqli_query($conexion, $sql);
             <title>Perfil</title>
         </head>
         <body>
+            <header>
+                <?php
+                include_once('encabezado.php');
+                ?>
+            </header>
+   
             <!-- comentario -->
             <h2>Mi Perfil</h2><br>
             <p><?php echo $reg['nombre']; ?></p><br>
