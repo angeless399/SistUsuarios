@@ -16,15 +16,20 @@ if(isset($_POST['enviar'])){
     $conexion = conexion();
     $email = $_POST['email'];
     $pass = $_POST['pass'];
-    $sql ="SELECT * FROM usuarios WHERE email='$email' AND pass='$pass'";
+    $sql ="SELECT * FROM usuarios WHERE email='$email'";
     $consulta = mysqli_query($conexion, $sql);
     if(mysqli_num_rows($consulta)>0){
         $reg = mysqli_fetch_assoc($consulta);
-        $_SESSION['nombre']=$reg['nombre'];
-        $_SESSION['id']=$reg['id_usuario'];
-        header("location: inicio.php");
+        if(password_verify($pass,$reg['pass'])){
+            $_SESSION['nombre']=$reg['nombre'];
+            $_SESSION['id']=$reg['id_usuario'];
+            header("location: inicio.php");
+        }else{
+            echo "Contraseña incorrecta";
+            session_destroy();
+        }
     }else{
-        echo "Usuario o contraseña incorrecta";
+        echo "Usuario incorrecto";
         session_destroy();
     }
 
