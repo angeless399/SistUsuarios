@@ -21,8 +21,9 @@ function borrar($id){
 }
 
 
-function editar($nombre,$apellido,$email,$pass){
+function editar($id,$nombre,$apellido,$email,$pass){
     $conexion = conexion();
+    $pass = password_hash($pass,PASSWORD_DEFAULT);
     $sql="UPDATE usuarios SET nombre='$nombre', apellido='$apellido', email='$email', pass='$pass' WHERE id_usuario='$id'";
     $update=mysqli_query($conexion,$sql);
     if($update){

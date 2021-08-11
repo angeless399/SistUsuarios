@@ -8,6 +8,11 @@ if(isset($_GET['s']) && $_GET['s']==1){
 if(isset($_GET['t'])){
     echo "USUARIO REGISTRADO, INICIE SESION";
 }
+
+//registrar.php
+if(isset($_GET['z'])){
+    echo "Este email ya se encuantra registrado";
+}
 ?>
 <?php
 session_start();
@@ -53,4 +58,3 @@ if(isset($_POST['enviar'])){
     <a href="InterfazRegistro.html">Registrarme</a>
 </body>
 </html>
-

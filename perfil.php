@@ -34,13 +34,12 @@ if(isset($_SESSION['id'])){
                 ?>
             </header>
    
-            <!-- comentario -->
             <h2>Mi Perfil</h2><br>
             <p><?php echo $reg['nombre']; ?></p><br>
             <p><?php echo $reg['apellido']; ?></p><br>
             <p><?php echo $reg['email']; ?></p><br>
-            <a href="editar_perfil_f.php?id_editar=<?php echo $reg['id_usuario']; ?>">Editar </a><br>
-            <a href="borrar.php?id_borrar=<?php echo $reg['id_usuario']; ?>">Borrar </a>
+            <a href="editar_perfil_f.php">Editar </a><br>
+            <a href="borrar.php">Borrar </a>
         </body>
         </html>
         <?php

@@ -3,8 +3,7 @@ session_start();
 if(isset($_SESSION['id'])){
     require_once('funciones.php');
     $conexion = conexion();
-
-    $idEditar=$_GET['id_editar'];
+    $idEditar = $_SESSION['id'];
 
     $sql ="SELECT * FROM usuarios WHERE id_usuario='$idEditar'";
     $consulta = mysqli_query($conexion, $sql);
@@ -28,7 +27,6 @@ if(isset($_SESSION['id'])){
     <h2>Editar</h2>
     <h4>Ingrese los nuevos datos</h4>
     <form action="" method="post">
-        <input type="text" name="id_editar" value="<?php echo $reg['id_usuario']; ?>" hidden>
         <label>Nombre </label><input type="text" name="nombre" value="<?php echo $reg['nombre']; ?>"><br>
         <label>Apellido </label><input type="text" name="apellido" value ="<?php echo $reg['apellido']; ?>"><br>
         <label>Email </label><input type="text" name="email" value ="<?php echo $reg['email']; ?>"><br>
@@ -40,8 +38,9 @@ if(isset($_SESSION['id'])){
 
 <?php
     if(isset($_POST['confirmar'])){
-        $editar=editar($_POST['nombre'], $_POST['apellido'], $_POST['email'], $_POST['pass']);
-        if($editar){
+        $editar=editar($_SESSION['id'],$_POST['nombre'], $_POST['apellido'], $_POST['email'], $_POST['pass']);
+        if($editar==1){
+            $_SESSION['nombre']=$_POST['nombre'];
             header("location:perfil.php?e=1");
         }else{
             header("location:perfil.php?e=0");
